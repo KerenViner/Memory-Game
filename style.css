@@ -1,0 +1,44 @@
+.game{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    gap: 10px;
+    padding: 10px;
+    align-content: space-between;
+    position: relative;
+    height: 200px;
+}
+
+.flip_container{
+    position: relative;
+    transition: all 400ms ease-in-out;
+    transform-style: preserve-3d;
+    width: 100px;
+    height: 150px;
+    padding: 10px;
+}
+
+.flip_container.flipped{
+    transform: rotateY(90deg);
+}
+
+.front img,
+.back img{
+    width: 100px;
+    height: 150px;
+    backface-visibility: hidden;
+    
+}
+
+.front.matched{
+    transition: opacity 0.3s;
+    opacity: 0.4;
+}
+
+.front{
+    position: absolute;
+    transform: rotateY(-90deg);
+}
+
+.back{
+    position: absolute;
+}
