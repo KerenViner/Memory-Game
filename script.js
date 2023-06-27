@@ -1,8 +1,10 @@
 var selectedCards = [];
+var matchedCards = 0;
+var numberOfCards = 12;
 
 function createCards(){ //creates Cards from images, adds the decorative background to the cards, creates doubles
 
-    for (i=1; i<=9; i++){
+    for (i=1; i<=numberOfCards; i++){
 
         setOne = () => {
             var div_containter = document.createElement('div');
@@ -25,7 +27,7 @@ function createCards(){ //creates Cards from images, adds the decorative backgro
         setTwo = () => {
             var div_containter = document.createElement('div');
             div_containter.className="flip_container";
-            div_containter.id = "setTwo"
+            div_containter.id = "setTwo";
         
             document.getElementsByTagName("body")[0].appendChild(div_containter);
         
@@ -51,9 +53,15 @@ function Match(){
         //console.log(card.firstChild)
         card.firstChild.classList.toggle("matched");
     }
-    console.log(selectedCards);
+
+    matchedCards+=1;
+    console.log(matchedCards);
+
     selectedCards.splice(0,2);
-    console.log(selectedCards);
+
+    if (matchedCards === numberOfCards){
+        gameReload();
+    }
 }
 
 function flipBackCards(){
@@ -61,9 +69,7 @@ function flipBackCards(){
         card.classList.toggle("flipped");
     }
 
-    console.log(selectedCards);
     selectedCards.splice(0,2);
-    console.log(selectedCards);
 }
 
 function shuffle(){ //shuffles the cards
@@ -81,9 +87,7 @@ function shuffle(){ //shuffles the cards
 
 }
 
-window.onload = function (){
-    shuffle();
-
+function gameMechanics(){
     const card = document.querySelectorAll(".flip_container").forEach(card =>{
         card.addEventListener("click", () => {
 
@@ -99,21 +103,45 @@ window.onload = function (){
                     console.log("Match");
                     setTimeout(() => {
                         Match();
-                    }, 1200) 
+                    }, 1000);
                     
                 }
                 else{
                     console.log("Not match")    
                     setTimeout(() => {
                         flipBackCards();
-                    }, 1200)                
+                    }, 1200);                
                     
                 }
             }
-
-            
-            
         })
     })
+        
+}
 
+
+
+function gameReload(){
+    //console.log(numberOfCards, matchedCards);
+    tsParticles.load("tsparticles", {
+        particles: {
+          color: {
+            value: ["#A020F0", "#00ff00", "#FFA500"],
+          },
+        },
+        preset: "confetti",
+      });
+
+      setTimeout(() => {
+        location.reload();
+      }, 4000);
+
+}
+
+
+
+window.onload = function (){
+    shuffle();
+
+    gameMechanics();
 };
